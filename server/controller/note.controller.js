@@ -2,6 +2,7 @@ import pool from '../config/db_config.js';
 
 
 export const createNotes = async (req, res) => {
+
     const { title, content, user_id, is_pinned } = req.body;
     if (!title||!content) {
         return res.status(401).json({
@@ -11,7 +12,7 @@ export const createNotes = async (req, res) => {
     }
     try {
         const result = await pool.query(
-            ' INSERT INTO notes (titile,content,is_pineed,user_id) VALUES($1,$2, $3, $4)  RETURNING * ', [title, content, is_pinned ?? false, req.user.user_id],
+            ' INSERT INTO notes (title,content,is_pinned,user_id) VALUES($1,$2, $3, $4)  RETURNING * ', [title, content, is_pinned ?? false, req.user.id],
         );
 
         return res.status(201).json({
@@ -21,14 +22,14 @@ export const createNotes = async (req, res) => {
         });
 
     } catch (error) {
-        return res.status(500).jons({
-            success: true,
+        return res.status(500).json({
+            success: false,
             message: error.message
         });
     }
 }
 
-export const getNotes = async (req, res) => {
+export const getAllNotes = async (req, res) => {
     try {
         const result = await pool.query(
             `
