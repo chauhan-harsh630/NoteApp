@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-    origin: 'https://note-app-ebon-one.vercel.app',
+    origin: 'https://note-app-chi-smoky.vercel.app',
     credentials: true
 }));
 app.use(cookieParser());
